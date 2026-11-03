@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Calc Hub – Scientific, Mortgage &amp; More</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>Calc Hub</h1>
+    <button id="themeBtn" aria-label="Toggle theme">🌓</button>
+  </header>
+
+  <nav id="tabs" role="tablist">
+    <button data-tab="sci" class="active">Scientific</button>
+    <button data-tab="mort">Mortgage</button>
+    <button data-tab="emi">Loan EMI</button>
+    <button data-tab="sip">SIP</button>
+    <button data-tab="comp">Compound</button>
+    <button data-tab="gst">GST / VAT</button>
+    <button data-tab="bmi">BMI</button>
+    <button data-tab="pct">Percentage</button>
+    <button data-tab="unit">Units</button>
+    <button data-tab="date">Dates</button>
+  </nav>
+
+  <main>
+    <!-- Scientific -->
+    <section id="sci" class="panel active">
+      <div class="display">
+        <div id="sciHistory" class="history"></div>
+        <input id="sciInput" type="text" autocomplete="off" spellcheck="false" placeholder="e.g. sin(30)+2^10/5!">
+        <div id="sciResult" class="result">0</div>
+      </div>
+      <div class="row">
+        <button id="angleBtn" class="chip">DEG</button>
+        <button id="memC" class="chip">MC</button>
+        <button id="memR" class="chip">MR</button>
+        <button id="memP" class="chip">M+</button>
+        <button id="memM" class="chip">M−</button>
+        <span id="memInd" class="muted"></span>
+      </div>
+      <div id="sciKeys" class="keys"></div>
+      <p class="muted">Keyboard works too. Functions: sin cos tan asin acos atan sinh cosh tanh log ln sqrt cbrt abs exp fact npr(n,r) ncr(n,r). Constants: pi, e, ans.</p>
+    </section>
+
+    <!-- Mortgage -->
+    <section id="mort" class="panel">
+      <form class="form" data-calc="mort">
+        <label>Home price <input name="price" type="number" step="any" value="500000"></label>
+        <label>Down payment <input name="down" type="number" step="any" value="100000"></label>
+        <label>Interest rate (% / yr) <input name="rate" type="number" step="any" value="6.5"></label>
+        <label>Term (years) <input name="years" type="number" step="any" value="30"></label>
+        <label>Extra monthly payment <input name="extra" type="number" step="any" value="0"></label>
+        <label>Property tax (/yr) <input name="propertyTaxYear" type="number" step="any" value="0"></label>
+        <label>Insurance (/yr) <input name="insuranceYear" type="number" step="any" value="0"></label>
+        <label>HOA / maintenance (/month) <input name="hoaMonth" type="number" step="any" value="0"></label>
+        <button type="submit" class="primary">Calculate</button>
+      </form>
+      <div id="mortOut" class="out"></div>
+      <canvas id="mortChart" height="180"></canvas>
+      <details><summary>Amortization schedule</summary><div id="mortTable" class="tablewrap"></div></details>
+    </section>
+
+    <!-- EMI -->
+    <section id="emi" class="panel">
+      <form class="form" data-calc="emi">
+        <label>Loan amount <input name="p" type="number" step="any" value="1000000"></label>
+        <label>Interest rate (% / yr) <input name="r" type="number" step="any" value="9"></label>
+        <label>Tenure (months) <input name="n" type="number" step="any" value="120"></label>
+        <button type="submit" class="primary">Calculate</button>
+      </form>
+      <div id="emiOut" class="out"></div>
+    </section>
+
+    <!-- SIP -->
+    <section id="sip" class="panel">
+      <form class="form" data-calc="sip">
+        <label>Monthly investment <input name="m" type="number" step="any" value="10000"></label>
+        <label>Expected return (% / yr) <input name="r" type="number" step="any" value="12"></label>
+        <label>Years <input name="y" type="number" step="any" value="15"></label>
+        <button type="submit" class="primary">Calculate</button>
+      </form>
+      <div id="sipOut" class="out"></div>
+    </section>
+
+    <!-- Compound -->
+    <section id="comp" class="panel">
+      <form class="form" data-calc="comp">
+        <label>Initial amount <input name="p" type="number" step="any" value="10000"></label>
+        <label>Monthly addition <input name="a" type="number" step="any" value="500"></label>
+        <label>Rate (% / yr) <input name="r" type="number" step="any" value="7"></label>
+        <label>Years <input name="y" type="number" step="any" value="20"></label>
+        <label>Compounds per year
+          <select name="n"><option value="1">Yearly</option><option value="4">Quarterly</option><option value="12" selected>Monthly</option><option value="365">Daily</option></select>
+        </label>
+        <button type="submit" class="primary">Calculate</button>
+      </form>
+      <div id="compOut" class="out"></div>
+      <canvas id="compChart" height="180"></canvas>
+    </section>
+
+    <!-- GST -->
+    <section id="gst" class="panel">
+      <form class="form" data-calc="gst">
+        <label>Amount <input name="a" type="number" step="any" value="1000"></label>
+        <label>Tax rate (%)
+          <select name="r"><option>5</option><option>12</option><option selected>18</option><option>28</option><option value="10">10 (VAT/GST)</option><option value="20">20 (VAT)</option></select>
+        </label>
+        <label>Amount is
+          <select name="mode"><option value="exclusive">Exclusive of tax</option><option value="inclusive">Inclusive of tax</option></select>
+        </label>
+        <button type="submit" class="primary">Calculate</button>
+      </form>
+      <div id="gstOut" class="out"></div>
+    </section>
+
+    <!-- BMI -->
+    <section id="bmi" class="panel">
+      <form class="form" data-calc="bmi">
+        <label>Weight (kg) <input name="w" type="number" step="any" value="70"></label>
+        <label>Height (cm) <input name="h" type="number" step="any" value="170"></label>
+        <button type="submit" class="primary">Calculate</button>
+      </form>
+      <div id="bmiOut" class="out"></div>
+    </section>
+
+    <!-- Percentage -->
+    <section id="pct" class="panel">
+      <form class="form" data-calc="pct">
+        <label>Type
+          <select name="k"><option value="of">What is A% of B?</option><option value="is">A is what % of B?</option><option value="change">% change from A to B</option></select>
+        </label>
+        <label>A <input name="a" type="number" step="any" value="15"></label>
+        <label>B <input name="b" type="number" step="any" value="200"></label>
+        <button type="submit" class="primary">Calculate</button>
+      </form>
+      <div id="pctOut" class="out"></div>
+    </section>
+
+    <!-- Units -->
+    <section id="unit" class="panel">
+      <div class="form">
+        <label>Category <select id="uCat"></select></label>
+        <label>Value <input id="uVal" type="number" step="any" value="1"></label>
+        <label>From <select id="uFrom"></select></label>
+        <label>To <select id="uTo"></select></label>
+      </div>
+      <div id="unitOut" class="out"></div>
+    </section>
+
+    <!-- Dates -->
+    <section id="date" class="panel">
+      <form class="form" data-calc="date">
+        <label>From <input name="d1" type="date"></label>
+        <label>To <input name="d2" type="date"></label>
+        <button type="submit" class="primary">Calculate</button>
+      </form>
+      <div id="dateOut" class="out"></div>
+    </section>
+  </main>
+
+  <footer class="muted">Calc Hub · runs entirely in your browser · estimates only, not financial advice</footer>
+
+  <script src="calc.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
